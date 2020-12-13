@@ -19,7 +19,7 @@
             "type": "shell",
             "args": [
                 "vstest",
-                "ChensTemplate.Tests\\bin\\Debug\\ChensTemplate.Tests.dll"
+                "Qb.Tests\\bin\\Debug\\Qb.Tests.dll"
             ],
             "group": "test",
             "problemMatcher": "$msCompile"

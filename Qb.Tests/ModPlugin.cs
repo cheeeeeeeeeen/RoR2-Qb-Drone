@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ClassBeingTested = Chen.Qb.ModPlugin;
 
-namespace My.Mod.Namespace.Tests
+namespace Chen.Qb.Tests
 {
     [TestClass]
     public class ModPlugin
@@ -8,7 +9,7 @@ namespace My.Mod.Namespace.Tests
         [TestMethod]
         public void DebugCheck_Toggled_ReturnsFalse()
         {
-            bool result = MyModPluginPlugin.DebugCheck();
+            bool result = ClassBeingTested.DebugCheck();
 
             Assert.IsFalse(result);
         }

@@ -1,24 +1,28 @@
 ﻿#undef DEBUG
 
 using BepInEx;
+using BepInEx.Configuration;
+using Chen.GradiusMod.Drones;
 using Chen.Helpers.GeneralHelpers;
 using Chen.Helpers.LogHelpers;
 using R2API.Utils;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using static Chen.Helpers.GeneralHelpers.AssetsManager;
+using Path = System.IO.Path;
 
-[assembly: InternalsVisibleTo("ChensTemplate.Tests")]
+[assembly: InternalsVisibleTo("Qb.Tests")]
 
-namespace My.Mod.Namespace
+namespace Chen.Qb
 {
     /// <summary>
-    /// Description of the plugin.
+    /// The Unity Plugin so that the mod is loaded in BepInEx.
     /// </summary>
     [BepInPlugin(ModGuid, ModName, ModVer)]
     [BepInDependency(R2API.R2API.PluginGUID, R2API.R2API.PluginVersion)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
     [R2APISubmoduleDependency()]
-    public class MyModPluginPlugin : BaseUnityPlugin
+    public class ModPlugin : BaseUnityPlugin
     {
         /// <summary>
         /// This mod's version.
@@ -32,14 +36,16 @@ namespace My.Mod.Namespace
         /// <summary>
         /// This mod's name.
         /// </summary>
-        public const string ModName = "MyModName";
+        public const string ModName = "Qb";
 
         /// <summary>
         /// This mod's GUID.
         /// </summary>
-        public const string ModGuid = "com.Chen.MyModName";
+        public const string ModGuid = "com.Chen.Qb";
 
+        internal static ConfigFile cfgFile;
         internal static Log Log;
+        internal static List<DroneInfo> dronesList = new List<DroneInfo>();
 
         private void Awake()
         {
@@ -48,9 +54,16 @@ namespace My.Mod.Namespace
 #if DEBUG
             Chen.Helpers.GeneralHelpers.MultiplayerTest.Enable(Log);
 #endif
-            //BundleInfo assetBundle = new BundleInfo("@ChensTemplate", "ChensTemplate.mymod_assets", BundleType.UnityAssetBundle);
-            //BundleInfo soundBank = new BundleInfo("@ChensTemplate", "ChensTemplate.mymod_sounds.bnk", BundleType.WWiseSoundBank);
-            //new AssetsManager(assetBundle, soundBank).RegisterAll();
+            Log.Debug("Initializing config file...");
+            cfgFile = new ConfigFile(Path.Combine(Paths.ConfigPath, ModGuid + ".cfg"), true);
+
+            Log.Debug("Loading asset bundle...");
+            BundleInfo assetBundle = new BundleInfo("@Qb", "Chen.Qb.assetbundle", BundleType.UnityAssetBundle);
+            new AssetsManager(assetBundle).RegisterAll();
+
+            Log.Debug("Registering Qb Drone...");
+            dronesList = DroneCatalog.Initialize(ModGuid, cfgFile);
+            DroneCatalog.ScopedSetupAll(dronesList);
         }
 
         internal static bool DebugCheck()

@@ -6,14 +6,19 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{98E96239-FC6F-4F46-858C-7C6A55BA7554}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.github\workflows\build.yml = .github\workflows\build.yml
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChensTemplate.Tests", "ChensTemplate.Tests\ChensTemplate.Tests.csproj", "{F2BE652C-37C7-438D-9597-A733F35352BC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qb.Tests", "Qb.Tests\Qb.Tests.csproj", "{F2BE652C-37C7-438D-9597-A733F35352BC}"
 	ProjectSection(ProjectDependencies) = postProject
-		{0752882C-3C38-4A02-84FB-B2E6A1C84ECE} = {0752882C-3C38-4A02-84FB-B2E6A1C84ECE}
+		{6BB959FE-DF95-4017-8EEE-5B3CEC9C8EEF} = {6BB959FE-DF95-4017-8EEE-5B3CEC9C8EEF}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChensTemplate", "ChensTemplate\ChensTemplate.csproj", "{0752882C-3C38-4A02-84FB-B2E6A1C84ECE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Qb", "Qb\Qb.csproj", "{6BB959FE-DF95-4017-8EEE-5B3CEC9C8EEF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +30,10 @@ Global
 		{F2BE652C-37C7-438D-9597-A733F35352BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2BE652C-37C7-438D-9597-A733F35352BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2BE652C-37C7-438D-9597-A733F35352BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0752882C-3C38-4A02-84FB-B2E6A1C84ECE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0752882C-3C38-4A02-84FB-B2E6A1C84ECE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0752882C-3C38-4A02-84FB-B2E6A1C84ECE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0752882C-3C38-4A02-84FB-B2E6A1C84ECE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BB959FE-DF95-4017-8EEE-5B3CEC9C8EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BB959FE-DF95-4017-8EEE-5B3CEC9C8EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BB959FE-DF95-4017-8EEE-5B3CEC9C8EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BB959FE-DF95-4017-8EEE-5B3CEC9C8EEF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
