@@ -36,6 +36,11 @@ namespace Chen.Qb.States
             damageCoefficient = 5f;
         }
 
+        private void StopSound()
+        {
+            if (soundId >= 0) AkSoundEngine.StopPlayingID((uint)soundId);
+        }
+
         public override void OnEnter()
         {
             Initialize();
@@ -53,8 +58,8 @@ namespace Chen.Qb.States
             {
                 timer -= intervalFire;
                 Vector3 position = aimOrigin.position;
-                Ray aimRay = GetAimRay();
-                Vector3 direction = Util.ApplySpread(aimRay.direction, 0, spread, 1, 1);
+                Vector3 direction = aimOrigin.forward;
+                direction = Util.ApplySpread(direction, 0, spread, 1, 1);
                 Quaternion rotation = Util.QuaternionSafeLookRotation(direction);
                 StopSound();
                 soundId = (int)Util.PlaySound(soundString, gameObject);
@@ -78,16 +83,6 @@ namespace Chen.Qb.States
             if (isAuthority && fixedAge >= duration) outer.SetNextStateToMain();
         }
 
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        private void StopSound()
-        {
-            if (soundId >= 0) AkSoundEngine.StopPlayingID((uint)soundId);
-        }
-
-        public override InterruptPriority GetMinimumInterruptPriority() => InterruptPriority.Skill;
+        public override InterruptPriority GetMinimumInterruptPriority() => InterruptPriority.PrioritySkill;
     }
 }
