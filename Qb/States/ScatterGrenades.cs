@@ -58,12 +58,18 @@ namespace Chen.Qb.States
             {
                 timer -= intervalFire;
                 Vector3 position = aimOrigin.position;
-                Vector3 direction = aimOrigin.forward;
+                Vector3 direction = transform.forward;
                 direction = Util.ApplySpread(direction, 0, spread, 1, 1);
                 Quaternion rotation = Util.QuaternionSafeLookRotation(direction);
                 StopSound();
                 soundId = (int)Util.PlaySound(soundString, gameObject);
-                EffectManager.SimpleEffect(effectPrefab, position, rotation, false);
+                EffectData effectData = new EffectData
+                {
+                    origin = position,
+                    rootObject = aimOrigin.gameObject,
+                    rotation = rotation
+                };
+                EffectManager.SpawnEffect(effectPrefab, effectData, false);
                 if (isAuthority)
                 {
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo

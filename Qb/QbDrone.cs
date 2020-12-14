@@ -119,7 +119,7 @@ namespace Chen.Qb
             master.bodyPrefab = droneBody;
             summonMasterBehavior.masterPrefab = droneMaster;
             PurchaseInteraction purchaseInteraction = brokenObject.GetComponent<PurchaseInteraction>();
-            purchaseInteraction.cost *= 2;
+            purchaseInteraction.cost *= 4;
             purchaseInteraction.Networkcost = purchaseInteraction.cost;
             purchaseInteraction.contextToken = "QB_DRONE_CONTEXT";
             purchaseInteraction.displayNameToken = "QB_DRONE_INTERACTABLE_NAME";
@@ -131,9 +131,10 @@ namespace Chen.Qb
             ModelLocator brokenModelLocator = brokenObject.GetComponent<ModelLocator>();
             brokenModelLocator.modelTransform = customBrokenModel.transform;
             Highlight highlight = brokenObject.GetComponent<Highlight>();
-            highlight.targetRenderer = customBrokenModel.transform.Find("BrokenCube").gameObject.GetComponent<MeshRenderer>();
-            EntityLocator entityLocator = customBrokenModel.AddComponent<EntityLocator>();
-            entityLocator.entity = brokenObject;
+            GameObject customBrokenInnerModel = customBrokenModel.transform.Find("BrokenCube").gameObject;
+            highlight.targetRenderer = customBrokenInnerModel.GetComponent<MeshRenderer>();
+            customBrokenModel.AddComponent<EntityLocator>().entity = brokenObject;
+            customBrokenInnerModel.AddComponent<EntityLocator>().entity = brokenObject;
             iSpawnCard = Object.Instantiate(origIsc);
             iSpawnCard.name = $"iscBroken{name}";
             iSpawnCard.prefab = brokenObject;

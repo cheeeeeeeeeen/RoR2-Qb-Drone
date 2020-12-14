@@ -26,6 +26,7 @@ namespace Chen.Qb.Components
         private InputBankTest inputBank;
         private float mayhemIntervalTimer;
         private Transform modelTransform;
+        private Transform root;
 
         private static void Initialize()
         {
@@ -33,7 +34,7 @@ namespace Chen.Qb.Components
             initialized = true;
             effectPrefab = FireTazer.chargeEffectPrefab;
             cooldown = 60f;
-            mayhemDuration = 3f;
+            mayhemDuration = 1f;
             projectilePrefabs = new List<GameObject>
             {
                 GlobalEventManager.instance.missilePrefab,
@@ -87,7 +88,13 @@ namespace Chen.Qb.Components
             {
                 Ray aimRay = SetAim(CycleAim(ref currentAim));
                 Quaternion rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
-                EffectManager.SimpleEffect(effectPrefab, aimRay.origin, rotation, false);
+                EffectData effectData = new EffectData
+                {
+                    origin = aimRay.origin,
+                    rootObject = root.gameObject,
+                    rotation = rotation
+                };
+                EffectManager.SpawnEffect(effectPrefab, effectData, false);
                 if (NetworkServer.active)
                 {
                     int projectileIndex = Random.Range(0, projectilePrefabs.Count);
@@ -110,41 +117,41 @@ namespace Chen.Qb.Components
 
         private Ray SetAim(ushort aim)
         {
-            Transform t = modelTransform;
+            root = modelTransform;
             Vector3 d = inputBank.GetAimRay().direction;
             switch (aim)
             {
                 case 0:
-                    t = t.Find("Node (Front)");
+                    root = modelTransform.Find("Node (Front)");
                     d = modelTransform.forward;
                     break;
 
                 case 1:
-                    t = t.Find("Node (Top)");
+                    root = modelTransform.Find("Node (Top)");
                     d = modelTransform.up;
                     break;
 
                 case 2:
-                    t = t.Find("Node (Left)");
+                    root = modelTransform.Find("Node (Left)");
                     d = -modelTransform.right;
                     break;
 
                 case 3:
-                    t = t.Find("Node (Right)");
+                    root = modelTransform.Find("Node (Right)");
                     d = modelTransform.right;
                     break;
 
                 case 4:
-                    t = t.Find("Node (Bottom)");
+                    root = modelTransform.Find("Node (Bottom)");
                     d = -modelTransform.up;
                     break;
 
                 case 5:
-                    t = t.Find("Node (Back)");
+                    root = modelTransform.Find("Node (Back)");
                     d = -modelTransform.forward;
                     break;
             }
-            return new Ray(t.position, d.normalized);
+            return new Ray(root.position, d.normalized);
         }
 
         private ushort CycleAim(ref ushort aim)

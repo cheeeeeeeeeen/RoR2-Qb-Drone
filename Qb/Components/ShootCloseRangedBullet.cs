@@ -1,6 +1,8 @@
 ﻿using EntityStates.Captain.Weapon;
 using EntityStates.Commando.CommandoWeapon;
+using EntityStates.Drone.DroneWeapon;
 using RoR2;
+using RoR2.Projectile;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,8 +13,7 @@ namespace Chen.Qb.Components
     {
         private static bool initialized = false;
         private static GameObject effectPrefab;
-        private static GameObject tracerPrefab;
-        private static GameObject hitEffectPrefab;
+        private static GameObject projectilePrefab;
         private static float cooldown;
         private static string soundString;
         private static float damageCoefficient;
@@ -31,13 +32,12 @@ namespace Chen.Qb.Components
             if (initialized) return;
             initialized = true;
             effectPrefab = FireTazer.chargeEffectPrefab;
-            tracerPrefab = FirePistol2.tracerEffectPrefab;
-            cooldown = .12f;
+            projectilePrefab = FireTwinRocket.projectilePrefab;
+            cooldown = .3f;
             soundString = FirePistol2.firePistolSoundString;
-            damageCoefficient = .5f;
+            damageCoefficient = 1f;
             range = 15f;
-            force = FirePistol2.force;
-            hitEffectPrefab = FirePistol2.hitEffectPrefab;
+            force = FireTwinRocket.force;
         }
 
         private void Awake()
@@ -72,7 +72,7 @@ namespace Chen.Qb.Components
                     Vector3 targetPosition = target.transform.position;
                     float currentDistance = range * 2;
                     Vector3 aimOrigin = transform.position;
-                    string muzzle = "Muzzle";
+                    GameObject root = gameObject;
                     foreach (Transform child in transform.Find("ModelBase").Find("MainBody"))
                     {
                         Vector3 childPosition = child.transform.position;
@@ -81,31 +81,35 @@ namespace Chen.Qb.Components
                         {
                             aimOrigin = childPosition;
                             currentDistance = computedDistance;
-                            muzzle = child.gameObject.name;
+                            root = child.gameObject;
                         }
                     }
-                    Quaternion rotation = Util.QuaternionSafeLookRotation((aimOrigin - transform.position).normalized);
+                    Quaternion rotation = Util.QuaternionSafeLookRotation((targetPosition - aimOrigin).normalized);
                     Util.PlaySound(soundString, gameObject);
-                    if (effectPrefab) EffectManager.SimpleEffect(effectPrefab, aimOrigin, rotation, false);
+                    if (effectPrefab)
+                    {
+                        EffectData effectData = new EffectData
+                        {
+                            origin = aimOrigin,
+                            rootObject = root,
+                            rotation = rotation
+                        };
+                        EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                    }
                     if (NetworkServer.active)
                     {
-                        new BulletAttack
+                        FireProjectileInfo info = new FireProjectileInfo
                         {
+                            projectilePrefab = projectilePrefab,
+                            position = aimOrigin,
+                            rotation = rotation,
                             owner = gameObject,
-                            weapon = gameObject,
-                            origin = aimOrigin,
-                            aimVector = (targetPosition - aimOrigin).normalized,
-                            minSpread = 0f,
-                            maxSpread = 0f,
-                            damage = damageCoefficient * characterBody.damage,
+                            damage = characterBody.damage * damageCoefficient,
                             force = force,
-                            tracerEffectPrefab = tracerPrefab,
-                            muzzleName = muzzle,
-                            hitEffectPrefab = hitEffectPrefab,
-                            isCrit = characterBody.RollCrit(),
-                            radius = .1f,
-                            smartCollision = true
-                        }.Fire();
+                            crit = characterBody.RollCrit(),
+                            damageColorIndex = DamageColorIndex.Default
+                        };
+                        ProjectileManager.instance.FireProjectile(info);
                     }
                     timer -= cooldown;
                 }
