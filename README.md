@@ -15,6 +15,24 @@ A sample, fully functional drone added to Risk of Rain 2.
 
 The drone is powered by the API of **[Chen's Gradius Mod](https://github.com/cheeeeeeeeeen/RoR2-ChensGradiusMod)**.
 
+#### What is this?
+
+A very mysterious drone of unknown origins. It is literally a cube that floats.
+
+There is a model name and number on an edge that says...
+
+**Qb.729.216.8 - "Cute Cube"**.
+
+That is all we know about it.
+
+#### Actions
+
+**Lob Grenades** - It seems to form grenades from one of its central nodes and lobs them. The grenades are armed, so stay clear out of it.
+
+**Close-Proximity Bomb Thing** - It seems to shoot fireballs that explode on contact. It only does so to nearby hostiles with uncanny accuracy.
+
+**Mayhem Salvo** - It has a weird behavior of generating rockets, missiles and mines combined at such a fast rate, all coming out from all of its nodes. This lasts for quite some time. The immense firepower is impressive.
+
 ## Installation
 
 Use **[r2modman](https://thunderstore.io/package/ebkr/r2modman/)** mod manager to install this mod.

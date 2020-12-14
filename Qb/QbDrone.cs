@@ -57,7 +57,7 @@ namespace Chen.Qb
             body.levelRegen *= 2;
             body.levelDamage *= 2;
             body.levelCrit *= 2;
-            //body.portraitIcon = Resources.Load<Texture>("@ChensGradiusMod:Assets/Drones/LaserDrone2/Icon/texLaserDrone2Icon.png");
+            body.portraitIcon = Resources.Load<Texture>("@Qb:Assets/Icon/QbIcon.png");
             GameObject customModel = Resources.Load<GameObject>("@Qb:Assets/DroneBody/MainBody.prefab");
             Object.Destroy(droneBody.transform.Find("Model Base").gameObject);
             GameObject modelBase = new GameObject("ModelBase");
