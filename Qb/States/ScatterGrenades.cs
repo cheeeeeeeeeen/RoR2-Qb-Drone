@@ -1,8 +1,10 @@
-﻿using EntityStates;
+﻿using Chen.GradiusMod.Items.GradiusOption;
+using EntityStates;
 using EntityStates.Captain.Weapon;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using RoR2Util = RoR2.Util;
 
 namespace Chen.Qb.States
 {
@@ -59,17 +61,21 @@ namespace Chen.Qb.States
                 timer -= intervalFire;
                 Vector3 position = aimOrigin.position;
                 Vector3 direction = transform.forward;
-                direction = Util.ApplySpread(direction, 0, spread, 1, 1);
-                Quaternion rotation = Util.QuaternionSafeLookRotation(direction);
+                direction = RoR2Util.ApplySpread(direction, 0, spread, 1, 1);
+                Quaternion rotation = RoR2Util.QuaternionSafeLookRotation(direction);
                 StopSound();
-                soundId = (int)Util.PlaySound(soundString, gameObject);
-                EffectData effectData = new EffectData
+                soundId = (int)RoR2Util.PlaySound(soundString, gameObject);
+                if (effectPrefab)
                 {
-                    origin = position,
-                    rootObject = aimOrigin.gameObject,
-                    rotation = rotation
-                };
-                EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                    EffectData effectData = new EffectData
+                    {
+                        origin = position,
+                        rootObject = aimOrigin.gameObject,
+                        rotation = rotation
+                    };
+                    EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                    Util.EffectOptions(characterBody, effectPrefab, false);
+                }
                 if (isAuthority)
                 {
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
@@ -84,6 +90,7 @@ namespace Chen.Qb.States
                         rotation = rotation
                     };
                     ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+                    Util.FireOptions(characterBody, fireProjectileInfo);
                 }
             }
             if (isAuthority && fixedAge >= duration) outer.SetNextStateToMain();

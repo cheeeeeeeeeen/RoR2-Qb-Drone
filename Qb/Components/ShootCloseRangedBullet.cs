@@ -6,6 +6,7 @@ using RoR2.Projectile;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using RoR2Util = RoR2.Util;
 
 namespace Chen.Qb.Components
 {
@@ -84,8 +85,8 @@ namespace Chen.Qb.Components
                             root = child.gameObject;
                         }
                     }
-                    Quaternion rotation = Util.QuaternionSafeLookRotation((targetPosition - aimOrigin).normalized);
-                    Util.PlaySound(soundString, gameObject);
+                    Quaternion rotation = RoR2Util.QuaternionSafeLookRotation((targetPosition - aimOrigin).normalized);
+                    RoR2Util.PlaySound(soundString, gameObject);
                     if (effectPrefab)
                     {
                         EffectData effectData = new EffectData
@@ -95,6 +96,7 @@ namespace Chen.Qb.Components
                             rotation = rotation
                         };
                         EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                        Util.EffectOptions(characterBody, effectPrefab, false);
                     }
                     if (NetworkServer.active)
                     {
@@ -110,6 +112,7 @@ namespace Chen.Qb.Components
                             damageColorIndex = DamageColorIndex.Default
                         };
                         ProjectileManager.instance.FireProjectile(info);
+                        Util.FireOptions(characterBody, info);
                     }
                     timer -= cooldown;
                 }

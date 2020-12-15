@@ -4,6 +4,7 @@ using RoR2.Projectile;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using RoR2Util = RoR2.Util;
 
 namespace Chen.Qb.Components
 {
@@ -87,14 +88,18 @@ namespace Chen.Qb.Components
             if (mayhemIntervalTimer >= mayhemInterval)
             {
                 Ray aimRay = SetAim(CycleAim(ref currentAim));
-                Quaternion rotation = Util.QuaternionSafeLookRotation(aimRay.direction);
-                EffectData effectData = new EffectData
+                Quaternion rotation = RoR2Util.QuaternionSafeLookRotation(aimRay.direction);
+                if (effectPrefab)
                 {
-                    origin = aimRay.origin,
-                    rootObject = root.gameObject,
-                    rotation = rotation
-                };
-                EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                    EffectData effectData = new EffectData
+                    {
+                        origin = aimRay.origin,
+                        rootObject = root.gameObject,
+                        rotation = rotation
+                    };
+                    EffectManager.SpawnEffect(effectPrefab, effectData, false);
+                    Util.EffectOptions(characterBody, effectPrefab, false);
+                }
                 if (NetworkServer.active)
                 {
                     int projectileIndex = Random.Range(0, projectilePrefabs.Count);
@@ -110,6 +115,7 @@ namespace Chen.Qb.Components
                         rotation = rotation
                     };
                     ProjectileManager.instance.FireProjectile(info);
+                    Util.FireOptions(characterBody, info);
                 }
                 mayhemIntervalTimer -= mayhemInterval;
             }
