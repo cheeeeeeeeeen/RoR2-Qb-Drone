@@ -90,7 +90,10 @@ namespace Chen.Qb.States
                         rotation = rotation
                     };
                     ProjectileManager.instance.FireProjectile(fireProjectileInfo);
-                    Util.FireOptions(characterBody, fireProjectileInfo);
+                    Util.FireOptions(characterBody, fireProjectileInfo, (_o, optionDirection) =>
+                    {
+                        return RoR2Util.ApplySpread(optionDirection, 0, spread, 1, 1);
+                    });
                 }
             }
             if (isAuthority && fixedAge >= duration) outer.SetNextStateToMain();

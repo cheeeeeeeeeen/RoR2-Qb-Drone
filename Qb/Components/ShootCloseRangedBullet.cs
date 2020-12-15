@@ -112,7 +112,10 @@ namespace Chen.Qb.Components
                             damageColorIndex = DamageColorIndex.Default
                         };
                         ProjectileManager.instance.FireProjectile(info);
-                        Util.FireOptions(characterBody, info);
+                        Util.FireOptions(characterBody, info, (option, _d) =>
+                        {
+                            return (targetPosition - option.transform.position).normalized;
+                        });
                     }
                     timer -= cooldown;
                 }

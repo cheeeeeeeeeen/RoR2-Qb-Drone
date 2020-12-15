@@ -35,7 +35,7 @@ namespace Chen.Qb.Components
             initialized = true;
             effectPrefab = FireTazer.chargeEffectPrefab;
             cooldown = 60f;
-            mayhemDuration = 1f;
+            mayhemDuration = 1.5f;
             projectilePrefabs = new List<GameObject>
             {
                 GlobalEventManager.instance.missilePrefab,
@@ -115,7 +115,7 @@ namespace Chen.Qb.Components
                         rotation = rotation
                     };
                     ProjectileManager.instance.FireProjectile(info);
-                    Util.FireOptions(characterBody, info);
+                    Util.FireOptions(characterBody, info, (_o, _d) => aimRay.direction);
                 }
                 mayhemIntervalTimer -= mayhemInterval;
             }

@@ -1,6 +1,7 @@
 ﻿using Chen.GradiusMod.Items.GradiusOption;
 using RoR2;
 using RoR2.Projectile;
+using System;
 using UnityEngine;
 using RoR2Util = RoR2.Util;
 
@@ -8,10 +9,11 @@ namespace Chen.Qb
 {
     internal static class Util
     {
-        public static void FireOptions(CharacterBody owner, FireProjectileInfo ownerInfo)
+        public static void FireOptions(CharacterBody owner, FireProjectileInfo ownerInfo, Func<GameObject, Vector3, Vector3> customDirection)
         {
             GradiusOption.instance.FireForAllOptions(owner, (option, _b, _t, direction) =>
             {
+                if (customDirection != null) direction = customDirection(option, direction);
                 FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                 {
                     projectilePrefab = ownerInfo.projectilePrefab,
