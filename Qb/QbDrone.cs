@@ -16,6 +16,7 @@ using RoR2.Skills;
 using System.Collections.Generic;
 using UnityEngine;
 using static R2API.DirectorAPI;
+using static Chen.Qb.ModPlugin;
 
 namespace Chen.Qb
 {
@@ -40,13 +41,13 @@ namespace Chen.Qb
             brokenObject = brokenObject.InstantiateClone($"{name}Broken");
             SummonMasterBehavior summonMasterBehavior = brokenObject.GetComponent<SummonMasterBehavior>();
             droneMaster = summonMasterBehavior.masterPrefab.InstantiateClone($"{name}Master");
-            MasterCatalog.getAdditionalEntries += (list) => list.Add(droneMaster);
+            contentProvider.masterObjects.Add(droneMaster);
             AISkillDriver[] skillDrivers = droneMaster.GetComponents<AISkillDriver>();
             skillDrivers[3].maxDistance = 25f;
             skillDrivers[4].maxDistance = 50f;
             CharacterMaster master = droneMaster.GetComponent<CharacterMaster>();
             droneBody = master.bodyPrefab.InstantiateClone($"{name}Body");
-            BodyCatalog.getAdditionalEntries += (list) => list.Add(droneBody);
+            contentProvider.bodyObjects.Add(droneBody);
             CharacterBody body = droneBody.GetComponent<CharacterBody>();
             body.baseNameToken = "QB_DRONE_NAME";
             body.baseMaxHealth *= 2;
@@ -57,8 +58,8 @@ namespace Chen.Qb
             body.levelRegen *= 2;
             body.levelDamage *= 2;
             body.levelCrit *= 2;
-            body.portraitIcon = Resources.Load<Texture>("@Qb:Assets/Icon/QbIcon.png");
-            GameObject customModel = Resources.Load<GameObject>("@Qb:Assets/DroneBody/MainBody.prefab");
+            body.portraitIcon = assetBundle.LoadAsset<Texture>("Assets/Icon/QbIcon.png");
+            GameObject customModel = assetBundle.LoadAsset<GameObject>("Assets/DroneBody/MainBody.prefab");
             Object.Destroy(droneBody.transform.Find("Model Base").gameObject);
             GameObject modelBase = new GameObject("ModelBase");
             modelBase.transform.parent = droneBody.transform;
@@ -109,7 +110,6 @@ namespace Chen.Qb
             grenadeSkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = grenadeSkillDef,
-                unlockableName = "",
                 viewableNode = new ViewablesCatalog.Node("", false, null)
             };
             locator.primary.SetFieldValue("_skillFamily", grenadeSkillFamily);
@@ -125,7 +125,7 @@ namespace Chen.Qb
             purchaseInteraction.displayNameToken = "QB_DRONE_INTERACTABLE_NAME";
             GenericDisplayNameProvider nameProvider = brokenObject.GetComponent<GenericDisplayNameProvider>();
             nameProvider.displayToken = "QB_DRONE_NAME";
-            GameObject customBrokenModel = Resources.Load<GameObject>("@Qb:Assets/DroneBroken/MainBroken.prefab");
+            GameObject customBrokenModel = assetBundle.LoadAsset<GameObject>("Assets/DroneBroken/MainBroken.prefab");
             customBrokenModel.transform.parent = brokenObject.transform;
             Object.Destroy(brokenObject.transform.Find("mdlDrone1").gameObject);
             ModelLocator brokenModelLocator = brokenObject.GetComponent<ModelLocator>();
@@ -152,9 +152,7 @@ namespace Chen.Qb
 #endif
                 spawnDistance = DirectorCore.MonsterSpawnDistance.Close,
                 allowAmbushSpawn = true,
-                preventOverhead = false,
-                requiredUnlockable = "",
-                forbiddenUnlockable = ""
+                preventOverhead = false
             };
             iDirectorCardHolder = new DirectorCardHolder
             {
@@ -164,7 +162,7 @@ namespace Chen.Qb
             };
             spiderMine = Resources.Load<GameObject>("prefabs/projectiles/SpiderMine").InstantiateClone("QbSpiderMine");
             Object.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
-            ProjectileCatalog.getAdditionalEntries += list => list.Add(spiderMine);
+            ProjectileAPI.Add(spiderMine);
         }
 
         protected override void SetupBehavior()
