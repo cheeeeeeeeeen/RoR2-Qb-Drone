@@ -1,5 +1,4 @@
-﻿using Chen.GradiusMod.Items.GradiusOption;
-using EntityStates;
+﻿using EntityStates;
 using EntityStates.Captain.Weapon;
 using RoR2;
 using RoR2.Projectile;

@@ -15,8 +15,8 @@ using RoR2.Projectile;
 using RoR2.Skills;
 using System.Collections.Generic;
 using UnityEngine;
-using static R2API.DirectorAPI;
 using static Chen.Qb.ModPlugin;
+using static R2API.DirectorAPI;
 
 namespace Chen.Qb
 {
