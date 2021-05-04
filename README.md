@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-2.0.0-orange)
+![Version](https://img.shields.io/badge/Version-2.0.1-orange)
 ![Build](https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone/workflows/Build/badge.svg)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Support Chen](https://img.shields.io/badge/Support-Chen-ff69b4)](https://ko-fi.com/cheeeeeeeeeen)
@@ -48,7 +48,7 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 
 ## Changelog
 
-**2.0.0**
+**2.0.1**
 - Update the mod so that it works with anniversary update.
 
 **1.0.1**
