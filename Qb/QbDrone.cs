@@ -1,4 +1,4 @@
-﻿#undef DEBUG
+﻿#define DEBUG
 
 using Chen.GradiusMod.Drones;
 using Chen.GradiusMod.Items.GradiusOption;
@@ -126,10 +126,19 @@ namespace Chen.Qb
             GenericDisplayNameProvider nameProvider = brokenObject.GetComponent<GenericDisplayNameProvider>();
             nameProvider.displayToken = "QB_DRONE_NAME";
             GameObject customBrokenModel = assetBundle.LoadAsset<GameObject>("Assets/DroneBroken/MainBroken.prefab");
-            customBrokenModel.transform.parent = brokenObject.transform;
-            Object.Destroy(brokenObject.transform.Find("mdlDrone1").gameObject);
+            Object.Destroy(brokenObject.transform.Find("ModelBase").gameObject);
+            GameObject brokenModelBase = new GameObject("ModelBase");
+            brokenModelBase.transform.parent = brokenObject.transform;
+            brokenModelBase.transform.localPosition = Vector3.zero;
+            brokenModelBase.transform.localRotation = Quaternion.identity;
+            brokenModelBase.transform.localScale = Vector3.one;
+            Transform brokenModelTransform = customBrokenModel.transform;
+            brokenModelTransform.parent = brokenModelBase.transform;
+            brokenModelTransform.localPosition = Vector3.zero;
+            brokenModelTransform.localRotation = Quaternion.identity;
             ModelLocator brokenModelLocator = brokenObject.GetComponent<ModelLocator>();
             brokenModelLocator.modelTransform = customBrokenModel.transform;
+            brokenModelLocator.modelBaseTransform = brokenModelBase.transform;
             Highlight highlight = brokenObject.GetComponent<Highlight>();
             GameObject customBrokenInnerModel = customBrokenModel.transform.Find("BrokenCube").gameObject;
             highlight.targetRenderer = customBrokenInnerModel.GetComponent<MeshRenderer>();
