@@ -49,6 +49,9 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 ## Changelog
 
 **2.0.1**
+- Fix the hard crash caused by a Null Reference Exception.
+
+**2.0.0**
 - Update the mod so that it works with anniversary update.
 
 **1.0.1**
