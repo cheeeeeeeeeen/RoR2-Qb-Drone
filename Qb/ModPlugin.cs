@@ -33,7 +33,7 @@ namespace Chen.Qb
 #if DEBUG
             "0." +
 #endif
-            "2.0.1";
+            "2.0.2";
 
         /// <summary>
         /// This mod's name.
