@@ -63,7 +63,7 @@ namespace Chen.Qb
             cfgFile = new ConfigFile(Path.Combine(Paths.ConfigPath, ModGuid + ".cfg"), true);
 
             Log.Debug("Loading asset bundle...");
-            BundleInfo bundleInfo = new BundleInfo("@Qb", "Chen.Qb.assetbundle", BundleType.UnityAssetBundle);
+            BundleInfo bundleInfo = new BundleInfo("Chen.Qb.assetbundle", BundleType.UnityAssetBundle);
             assetBundle = new AssetsManager(bundleInfo).Register() as AssetBundle;
 
             Log.Debug("Registering Qb Drone...");
