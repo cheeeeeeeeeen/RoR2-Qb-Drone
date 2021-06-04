@@ -38,15 +38,15 @@ namespace Chen.Qb
             LanguageAPI.Add("QB_DRONE_INTERACTABLE_NAME", "Broken Qb Drone");
             InteractableSpawnCard origIsc = Resources.Load<InteractableSpawnCard>("spawncards/interactablespawncard/iscBrokenDrone1");
             brokenObject = origIsc.prefab;
-            brokenObject = brokenObject.InstantiateClone($"{name}Broken");
+            brokenObject = brokenObject.InstantiateClone($"{name}Broken", true);
             SummonMasterBehavior summonMasterBehavior = brokenObject.GetComponent<SummonMasterBehavior>();
-            droneMaster = summonMasterBehavior.masterPrefab.InstantiateClone($"{name}Master");
+            droneMaster = summonMasterBehavior.masterPrefab.InstantiateClone($"{name}Master", true);
             contentProvider.masterObjects.Add(droneMaster);
             AISkillDriver[] skillDrivers = droneMaster.GetComponents<AISkillDriver>();
             skillDrivers[3].maxDistance = 25f;
             skillDrivers[4].maxDistance = 50f;
             CharacterMaster master = droneMaster.GetComponent<CharacterMaster>();
-            droneBody = master.bodyPrefab.InstantiateClone($"{name}Body");
+            droneBody = master.bodyPrefab.InstantiateClone($"{name}Body", true);
             contentProvider.bodyObjects.Add(droneBody);
             CharacterBody body = droneBody.GetComponent<CharacterBody>();
             body.baseNameToken = "QB_DRONE_NAME";
@@ -145,7 +145,7 @@ namespace Chen.Qb
                 MonsterCategory = MonsterCategory.None,
                 InteractableCategory = InteractableCategory.Drones,
             };
-            spiderMine = Resources.Load<GameObject>("prefabs/projectiles/SpiderMine").InstantiateClone("QbSpiderMine");
+            spiderMine = Resources.Load<GameObject>("prefabs/projectiles/SpiderMine").InstantiateClone("QbSpiderMine", true);
             Object.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
             ProjectileAPI.Add(spiderMine);
         }
