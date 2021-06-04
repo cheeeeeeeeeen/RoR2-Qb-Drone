@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>2.0.2</Version>
+    <Version>2.0.3</Version>
     <PackageProjectUrl>https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone</PackageProjectUrl>
     <RepositoryUrl>https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone</RepositoryUrl>
     <RootNamespace>Chen.Qb</RootNamespace>
@@ -76,7 +76,7 @@
   </Target>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Condition="'$(OS)' == 'Windows_NT'" Command="mkdir &quot;$(ProjectDir)Build&quot;&#xD;&#xA;cd &quot;$(ProjectDir)Build&quot;&#xD;&#xA;del * /Q&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; /Y&#xD;&#xA;if '$(ConfigurationName)' == 'Debug' (&#xD;&#xA;  copy &quot;$(ProjectDir)ModMeta&quot; . /Y&#xD;&#xA;  copy &quot;$(SolutionDir)README.md&quot; . /Y&#xD;&#xA;  copy &quot;$(SolutionDir)LICENSE.txt&quot; . /Y&#xD;&#xA;  7z a Build.zip .\* -x!Build.zip -x!old_*&#xD;&#xA;  copy &quot;$(TargetFileName)&quot; &quot;C:\Users\Chen\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Default\BepInEx\plugins\Chen-Qb&quot; /Y&#xD;&#xA;)" />
+    <Exec Condition="'$(OS)' == 'Windows_NT'" Command="mkdir &quot;$(ProjectDir)Build&quot;&#xD;&#xA;cd &quot;$(ProjectDir)Build&quot;&#xD;&#xA;del * /Q&#xD;&#xA;xcopy &quot;$(TargetPath)&quot; /Y&#xD;&#xA;if '$(ConfigurationName)' == 'Debug' (&#xD;&#xA;  copy &quot;$(ProjectDir)ModMeta&quot; . /Y&#xD;&#xA;  copy &quot;$(SolutionDir)README.md&quot; . /Y&#xD;&#xA;  copy &quot;$(SolutionDir)LICENSE.txt&quot; . /Y&#xD;&#xA;  7z a Build.zip .\* -x!Build.zip -x!old_*&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA; copy &quot;$(TargetFileName)&quot; &quot;C:\Users\Chen\AppData\Roaming\Thunderstore Mod Manager\DataFolder\RiskOfRain2\profiles\Default\BepInEx\plugins\Chen-Qb&quot; /Y" />
     <Exec Condition="'$(OS)' == 'Unix'" Command="mkdir &quot;$(ProjectDir)Build&quot;&#xD;&#xA;cd &quot;$(ProjectDir)Build&quot;&#xD;&#xA;rm -rf *&#xD;&#xA;cp &quot;$(TargetPath)&quot; &quot;$(TargetFileName)&quot;" />
   </Target>
 </Project>
