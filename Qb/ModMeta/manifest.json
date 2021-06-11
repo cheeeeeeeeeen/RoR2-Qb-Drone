@@ -1,12 +1,12 @@
 {
   "name": "Qb",
-  "version_number": "2.0.3",
+  "version_number": "2.0.4",
   "website_url": "https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone",
   "description": "A sample, fully functional drone, powered by the API of Chen's Gradius Mod, added to Risk of Rain 2.",
   "dependencies": [
     "bbepis-BepInExPack-5.4.9",
     "tristanmcpherson-R2API-3.0.43",
     "Chen-ChensHelpers-1.0.10",
-    "Chen-ChensGradiusMod-3.2.0"
+    "Chen-ChensGradiusMod-3.3.1"
   ]
 }
