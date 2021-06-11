@@ -30,6 +30,8 @@ namespace Chen.Qb
         private GameObject droneBody { get; set; }
         private GameObject droneMaster { get; set; }
 
+        protected override GameObject DroneCharacterMasterObject => droneMaster;
+
         protected override void SetupComponents()
         {
             base.SetupComponents();
@@ -147,6 +149,7 @@ namespace Chen.Qb
             };
             spiderMine = Resources.Load<GameObject>("prefabs/projectiles/SpiderMine").InstantiateClone("QbSpiderMine", true);
             Object.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
+            spiderMine.AddComponent<Disappear>();
             ProjectileAPI.Add(spiderMine);
         }
 

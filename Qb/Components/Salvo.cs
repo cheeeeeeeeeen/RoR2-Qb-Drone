@@ -1,6 +1,7 @@
 ﻿using EntityStates.Captain.Weapon;
 using RoR2;
 using RoR2.Projectile;
+using RoR2.UI;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -60,6 +61,7 @@ namespace Chen.Qb.Components
 
         private void FixedUpdate()
         {
+            if (PauseScreenController.paused) return;
             if (mayhemMode)
             {
                 mayhemTimer += Time.fixedDeltaTime;
