@@ -50,6 +50,7 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 
 **2.0.5**
 - Update the mod so that it works after another update of Chen's Gradius Mod.
+- Actually add Chen's Gradius Mod as a BepInDependency. Doh.
 
 **2.0.4**
 - Update the mod so that it works after the update of Chen's Gradius Mod.
