@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-2.0.4-orange)
+![Version](https://img.shields.io/badge/Version-2.0.5-orange)
 ![Build](https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone/workflows/Build/badge.svg)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Support Chen](https://img.shields.io/badge/Support-Chen-ff69b4)](https://ko-fi.com/cheeeeeeeeeen)
@@ -35,9 +35,9 @@ That is all we know about it.
 
 ## Installation
 
-Use **[r2modman](https://thunderstore.io/package/ebkr/r2modman/)** mod manager to install this mod.
+Use **[Thunderstore Mod Manager](https://www.overwolf.com/app/Thunderstore-Thunderstore_Mod_Manager)** to install this mod.
 
-If one does not want to use a mod manager, then get the DLL from **[Thunderstore](https://thunderstore.io/your/mod/link/)**.
+If one does not want to use a mod manager, then get the DLL from **[Thunderstore](https://thunderstore.io/package/Chen/Qb/)**.
 
 ## Contact
 - Issue Page: https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone/issues
@@ -47,6 +47,9 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 - Give a tip through Ko-fi: https://ko-fi.com/cheeeeeeeeeen
 
 ## Changelog
+
+**2.0.5**
+- Update the mod so that it works after another update of Chen's Gradius Mod.
 
 **2.0.4**
 - Update the mod so that it works after the update of Chen's Gradius Mod.
