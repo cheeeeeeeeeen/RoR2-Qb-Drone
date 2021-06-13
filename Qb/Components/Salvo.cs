@@ -105,11 +105,12 @@ namespace Chen.Qb.Components
                 if (NetworkServer.active)
                 {
                     int projectileIndex = Random.Range(0, projectilePrefabs.Count);
+                    float computedDamage = characterBody.damage * damageCoefficients[projectileIndex];
                     FireProjectileInfo info = new FireProjectileInfo
                     {
                         projectilePrefab = projectilePrefabs[projectileIndex],
                         crit = characterBody.RollCrit(),
-                        damage = characterBody.damage * damageCoefficients[projectileIndex],
+                        damage = computedDamage,
                         damageColorIndex = DamageColorIndex.Default,
                         force = forces[projectileIndex],
                         owner = gameObject,
@@ -118,6 +119,7 @@ namespace Chen.Qb.Components
                     };
                     ProjectileManager.instance.FireProjectile(info);
                     Util.FireOptions(characterBody, info, (_o, _d) => aimRay.direction);
+                    Util.TriggerArmsRace(characterBody, computedDamage);
                 }
                 mayhemIntervalTimer -= mayhemInterval;
             }

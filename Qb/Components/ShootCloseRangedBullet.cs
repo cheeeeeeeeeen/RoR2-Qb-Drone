@@ -100,13 +100,14 @@ namespace Chen.Qb.Components
                     }
                     if (NetworkServer.active)
                     {
+                        float computedDamage = characterBody.damage * damageCoefficient;
                         FireProjectileInfo info = new FireProjectileInfo
                         {
                             projectilePrefab = projectilePrefab,
                             position = aimOrigin,
                             rotation = rotation,
                             owner = gameObject,
-                            damage = characterBody.damage * damageCoefficient,
+                            damage = computedDamage,
                             force = force,
                             crit = characterBody.RollCrit(),
                             damageColorIndex = DamageColorIndex.Default
@@ -116,6 +117,7 @@ namespace Chen.Qb.Components
                         {
                             return (targetPosition - option.transform.position).normalized;
                         });
+                        Util.TriggerArmsRace(characterBody, computedDamage);
                     }
                     timer -= cooldown;
                 }

@@ -77,11 +77,12 @@ namespace Chen.Qb.States
                 }
                 if (isAuthority)
                 {
+                    float computedDamage = damageStat * damageCoefficient;
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {
                         projectilePrefab = grenadePrefab,
                         crit = RollCrit(),
-                        damage = damageStat * damageCoefficient,
+                        damage = computedDamage,
                         damageColorIndex = DamageColorIndex.Default,
                         force = 0f,
                         owner = gameObject,
@@ -93,6 +94,7 @@ namespace Chen.Qb.States
                     {
                         return RoR2Util.ApplySpread(optionDirection, 0, spread, 1, 1);
                     });
+                    Util.TriggerArmsRace(characterBody, computedDamage);
                 }
             }
             if (isAuthority && fixedAge >= duration) outer.SetNextStateToMain();

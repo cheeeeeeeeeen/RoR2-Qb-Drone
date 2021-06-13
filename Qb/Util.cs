@@ -1,4 +1,5 @@
-﻿using Chen.GradiusMod.Items.GradiusOption;
+﻿using Chen.GradiusMod.Compatibility;
+using Chen.GradiusMod.Items.GradiusOption;
 using RoR2;
 using RoR2.Projectile;
 using System;
@@ -41,6 +42,14 @@ namespace Chen.Qb
                 };
                 EffectManager.SpawnEffect(effectPrefab, effectData, transmit);
             });
+        }
+
+        public static void TriggerArmsRace(CharacterBody catalyst, float damage)
+        {
+            if (ChensClassicItems.enabled)
+            {
+                ChensClassicItems.TriggerArtillery(catalyst, damage, catalyst.RollCrit());
+            }
         }
     }
 }
