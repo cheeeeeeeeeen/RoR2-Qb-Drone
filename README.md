@@ -50,6 +50,7 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 
 **2.0.6**
 - Add Arms Race support from Chen's Classic Items.
+- Update the code so that Qb will follow new rules of Artifact of Machines from Chen's Gradius Mod.
 
 **2.0.5**
 - Update the mod so that it works after another update of Chen's Gradius Mod.

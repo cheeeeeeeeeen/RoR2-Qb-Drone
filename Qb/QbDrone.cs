@@ -32,6 +32,12 @@ namespace Chen.Qb
 
         protected override GameObject DroneCharacterMasterObject => droneMaster;
 
+        protected override void SetupConfig()
+        {
+            spawnWeightWithMachinesArtifact = 0;
+            base.SetupConfig();
+        }
+
         protected override void SetupComponents()
         {
             base.SetupComponents();
