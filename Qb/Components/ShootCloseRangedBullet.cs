@@ -20,6 +20,7 @@ namespace Chen.Qb.Components
         private static float damageCoefficient;
         private static float range;
         private static float force;
+        private static float velocity;
 
         private BullseyeSearch enemyFinder;
         private HurtBox target;
@@ -39,6 +40,7 @@ namespace Chen.Qb.Components
             damageCoefficient = 1f;
             range = 15f;
             force = FireTwinRocket.force;
+            velocity = projectilePrefab.GetComponent<ProjectileSimple>().desiredForwardSpeed * 2f;
         }
 
         private void Awake()
@@ -110,7 +112,8 @@ namespace Chen.Qb.Components
                             damage = computedDamage,
                             force = force,
                             crit = characterBody.RollCrit(),
-                            damageColorIndex = DamageColorIndex.Default
+                            damageColorIndex = DamageColorIndex.Default,
+                            speedOverride = velocity
                         };
                         ProjectileManager.instance.FireProjectile(info);
                         Util.FireOptions(characterBody, info, (option, _d) =>
