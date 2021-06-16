@@ -38,7 +38,7 @@ namespace Chen.Qb.Components
             cooldown = .3f;
             soundString = FirePistol2.firePistolSoundString;
             damageCoefficient = 1f;
-            range = 15f;
+            range = 10f;
             force = FireTwinRocket.force;
             velocity = projectilePrefab.GetComponent<ProjectileSimple>().desiredForwardSpeed * 2f;
         }
@@ -73,7 +73,7 @@ namespace Chen.Qb.Components
                 if (target)
                 {
                     Vector3 targetPosition = target.transform.position;
-                    float currentDistance = range * 2;
+                    float currentDistance = range * 3;
                     Vector3 aimOrigin = transform.position;
                     GameObject root = gameObject;
                     foreach (Transform child in transform.Find("ModelBase").Find("MainBody"))
