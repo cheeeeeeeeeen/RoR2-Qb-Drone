@@ -49,7 +49,8 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 ## Changelog
 
 **2.0.7**
-- Double the projectile speed of Close-Proximity Bomb Thing.
+- Double the projectile speed of Close-Proximity Bomb Thing, as well as decrease the range of detection.
+- Integrate Content Pack management from Chen's Helpers.
 
 **2.0.6**
 - Add Arms Race support from Chen's Classic Items.
