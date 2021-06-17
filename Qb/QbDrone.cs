@@ -1,5 +1,6 @@
 ﻿#undef DEBUG
 
+using Chen.GradiusMod;
 using Chen.GradiusMod.Drones;
 using Chen.GradiusMod.Items.GradiusOption;
 using Chen.Helpers.CollectionHelpers;
@@ -55,6 +56,7 @@ namespace Chen.Qb
             AISkillDriver[] skillDrivers = droneMaster.GetComponents<AISkillDriver>();
             skillDrivers[3].maxDistance = 25f;
             skillDrivers[4].maxDistance = 50f;
+            skillDrivers.SetAllDriversToAimTowardsEnemies();
             CharacterMaster master = droneMaster.GetComponent<CharacterMaster>();
             droneBody = master.bodyPrefab.InstantiateClone($"{name}Body", true);
             contentProvider.bodyObjects.Add(droneBody);
