@@ -25,6 +25,8 @@ namespace Chen.Qb
         public InteractableSpawnCard iSpawnCard { get; set; }
         public GameObject spiderMine { get; set; }
 
+        public override bool canHaveOptions => true;
+
         private GameObject brokenObject { get; set; }
         private DirectorCardHolder iDirectorCardHolder { get; set; }
         private GameObject droneBody { get; set; }
