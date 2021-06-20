@@ -50,6 +50,7 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 
 **2.0.8**
 - Update the mod so that it works after the update of Chen's Gradius Mod.
+- Optimize by caching all resource loading.
 
 **2.0.7**
 - Double the projectile speed of Close-Proximity Bomb Thing, as well as decrease the range of detection.
