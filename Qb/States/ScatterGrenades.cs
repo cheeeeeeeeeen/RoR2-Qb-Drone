@@ -11,7 +11,6 @@ namespace Chen.Qb.States
     {
         private static bool initialized = false;
         private static GameObject effectPrefab;
-        private static GameObject grenadePrefab;
         private static float duration;
         private static int projectileNumber;
         private static float intervalFire;
@@ -23,12 +22,13 @@ namespace Chen.Qb.States
         private float timer;
         private int soundId;
 
+        private static GameObject grenadePrefab { get => Resources.Load<GameObject>("prefabs/projectiles/CommandoGrenadeProjectile"); }
+
         private static void Initialize()
         {
             if (initialized) return;
             initialized = true;
             effectPrefab = FireTazer.chargeEffectPrefab;
-            grenadePrefab = Resources.Load<GameObject>("prefabs/projectiles/CommandoGrenadeProjectile");
             projectileNumber = 15;
             intervalFire = .1f;
             duration = intervalFire * projectileNumber;

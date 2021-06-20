@@ -30,6 +30,8 @@ namespace Chen.Qb.Components
         private Transform modelTransform;
         private Transform root;
 
+        private static GameObject fireworksProjectile { get => Resources.Load<GameObject>("prefabs/projectiles/FireworkProjectile"); }
+
         private static void Initialize()
         {
             if (initialized) return;
@@ -40,7 +42,7 @@ namespace Chen.Qb.Components
             projectilePrefabs = new List<GameObject>
             {
                 GlobalEventManager.instance.missilePrefab,
-                Resources.Load<GameObject>("prefabs/projectiles/FireworkProjectile"),
+                fireworksProjectile,
                 QbDrone.instance.spiderMine
             };
             damageCoefficients = new List<float> { 3f, 1.5f, 5f };

@@ -33,6 +33,12 @@ namespace Chen.Qb
         private GameObject droneBody { get; set; }
         private GameObject droneMaster { get; set; }
 
+        private static InteractableSpawnCard interactableSpawnCardBasis { get => Resources.Load<InteractableSpawnCard>("spawncards/interactablespawncard/iscBrokenDrone1"); }
+
+        private static SkillDef skillBasis { get => Resources.Load<SkillDef>("skilldefs/drone1body/Drone1BodyGun"); }
+
+        private static GameObject originalSpiderMine { get => Resources.Load<GameObject>("prefabs/projectiles/SpiderMine"); }
+
         protected override GameObject DroneCharacterMasterObject => droneMaster;
 
         protected override void SetupConfig()
@@ -47,9 +53,7 @@ namespace Chen.Qb
             LanguageAPI.Add("QB_DRONE_NAME", "Qb Drone");
             LanguageAPI.Add("QB_DRONE_CONTEXT", "Repair Qb Drone");
             LanguageAPI.Add("QB_DRONE_INTERACTABLE_NAME", "Broken Qb Drone");
-            InteractableSpawnCard origIsc = Resources.Load<InteractableSpawnCard>("spawncards/interactablespawncard/iscBrokenDrone1");
-            brokenObject = origIsc.prefab;
-            brokenObject = brokenObject.InstantiateClone($"{name}Broken", true);
+            brokenObject = interactableSpawnCardBasis.prefab.InstantiateClone($"{name}Broken", true);
             SummonMasterBehavior summonMasterBehavior = brokenObject.GetComponent<SummonMasterBehavior>();
             droneMaster = summonMasterBehavior.masterPrefab.InstantiateClone($"{name}Master", true);
             contentProvider.masterObjects.Add(droneMaster);
@@ -96,9 +100,8 @@ namespace Chen.Qb
             hurtBoxGroup.mainHurtBox = hurtBox;
             hurtBoxGroup.bullseyeCount = 1;
             SkillLocator locator = droneBody.GetComponent<SkillLocator>();
-            SkillDef origSkillDef = Resources.Load<SkillDef>("skilldefs/drone1body/Drone1BodyGun");
             LoadoutAPI.AddSkill(typeof(ScatterGrenades));
-            SkillDef grenadeSkillDef = Object.Instantiate(origSkillDef);
+            SkillDef grenadeSkillDef = Object.Instantiate(skillBasis);
             grenadeSkillDef.activationState = new SerializableEntityStateType(typeof(ScatterGrenades));
             grenadeSkillDef.baseRechargeInterval = 12;
             grenadeSkillDef.beginSkillCooldownOnSkillEnd = true;
@@ -132,7 +135,7 @@ namespace Chen.Qb
             highlight.targetRenderer = customBrokenInnerModel.GetComponent<MeshRenderer>();
             customBrokenModel.AddComponent<EntityLocator>().entity = brokenObject;
             customBrokenInnerModel.AddComponent<EntityLocator>().entity = brokenObject;
-            iSpawnCard = Object.Instantiate(origIsc);
+            iSpawnCard = Object.Instantiate(interactableSpawnCardBasis);
             iSpawnCard.name = $"iscBroken{name}";
             iSpawnCard.prefab = brokenObject;
             iSpawnCard.slightlyRandomizeOrientation = true;
@@ -157,7 +160,7 @@ namespace Chen.Qb
                 MonsterCategory = MonsterCategory.None,
                 InteractableCategory = InteractableCategory.Drones,
             };
-            spiderMine = Resources.Load<GameObject>("prefabs/projectiles/SpiderMine").InstantiateClone("QbSpiderMine", true);
+            spiderMine = originalSpiderMine.InstantiateClone("QbSpiderMine", true);
             Object.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
             spiderMine.AddComponent<Disappear>();
             ProjectileAPI.Add(spiderMine);
