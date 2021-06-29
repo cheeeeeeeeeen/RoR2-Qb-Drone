@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-2.0.8-orange)
+![Version](https://img.shields.io/badge/Version-2.0.9-orange)
 ![Build](https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone/workflows/Build/badge.svg)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Support Chen](https://img.shields.io/badge/Support-Chen-ff69b4)](https://ko-fi.com/cheeeeeeeeeen)
@@ -47,6 +47,9 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 - Give a tip through Ko-fi: https://ko-fi.com/cheeeeeeeeeen
 
 ## Changelog
+
+**2.0.9**
+- Update code so that it works after the breaking changes of Chen's Helpers.
 
 **2.0.8**
 - Update the mod so that it works after the update of Chen's Gradius Mod.

@@ -35,7 +35,7 @@ namespace Chen.Qb
 #if DEBUG
             "0." +
 #endif
-            "2.0.8";
+            "2.0.9";
 
         /// <summary>
         /// This mod's name.
@@ -66,7 +66,7 @@ namespace Chen.Qb
 
             Log.Debug("Loading asset bundle...");
             BundleInfo bundleInfo = new BundleInfo("Chen.Qb.assetbundle", BundleType.UnityAssetBundle);
-            assetBundle = new AssetsManager(bundleInfo).Register() as AssetBundle;
+            assetBundle = new AssetsManager(bundleInfo).Register();
 
             Log.Debug("Registering Qb Drone...");
             dronesList = DroneCatalog.Initialize(ModGuid, cfgFile);

@@ -4,6 +4,7 @@ using Chen.GradiusMod;
 using Chen.GradiusMod.Drones;
 using Chen.GradiusMod.Items.GradiusOption;
 using Chen.Helpers.CollectionHelpers;
+using Chen.Helpers.RoR2Helpers;
 using Chen.Helpers.UnityHelpers;
 using Chen.Qb.Components;
 using Chen.Qb.States;
