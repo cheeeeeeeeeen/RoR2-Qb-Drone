@@ -50,6 +50,7 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 
 **2.0.9**
 - Update code so that it works after the breaking changes of Chen's Helpers.
+- Integrate shortcut methods from Chen's Gradius Mod.
 
 **2.0.8**
 - Update the mod so that it works after the update of Chen's Gradius Mod.
