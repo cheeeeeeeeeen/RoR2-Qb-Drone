@@ -1,10 +1,10 @@
-﻿#undef DEBUG
+﻿#define DEBUG
 
 using Chen.GradiusMod;
 using Chen.GradiusMod.Drones;
 using Chen.GradiusMod.Items.GradiusOption;
 using Chen.Helpers.CollectionHelpers;
-using Chen.Helpers.RoR2Helpers;
+using Chen.Helpers.GeneralHelpers;
 using Chen.Helpers.UnityHelpers;
 using Chen.Qb.Components;
 using Chen.Qb.States;
@@ -78,7 +78,7 @@ namespace Chen.Qb
             body.portraitIcon = assetBundle.LoadAsset<Texture>("Assets/Icon/QbIcon.png");
             GameObject customModel = assetBundle.LoadAsset<GameObject>("Assets/DroneBody/MainBody.prefab");
             droneBody.ReplaceModel(customModel);
-            customModel.InitializeDroneModelComponents(body);
+            customModel.InitializeDroneModelComponents(body, 1.4f);
             SkillLocator locator = droneBody.GetComponent<SkillLocator>();
             LoadoutAPI.AddSkill(typeof(ScatterGrenades));
             SkillDef grenadeSkillDef = Object.Instantiate(skillBasis);
@@ -115,10 +115,21 @@ namespace Chen.Qb
             highlight.targetRenderer = customBrokenInnerModel.GetComponent<MeshRenderer>();
             customBrokenModel.AddComponent<EntityLocator>().entity = brokenObject;
             customBrokenInnerModel.AddComponent<EntityLocator>().entity = brokenObject;
+            GameObject brokenEffects = brokenObject.transform.Find("ModelBase").Find("BrokenDroneVFX").gameObject;
+            brokenEffects.transform.parent = customBrokenModel.transform;
+            GameObject sparks = brokenEffects.transform.Find("Small Sparks, Mesh").gameObject;
+            ParticleSystem.ShapeModule sparksShape = sparks.GetComponent<ParticleSystem>().shape;
+            sparksShape.shapeType = ParticleSystemShapeType.MeshRenderer;
+            sparksShape.meshShapeType = ParticleSystemMeshShapeType.Edge;
+            sparksShape.meshRenderer = (MeshRenderer)highlight.targetRenderer;
+            GameObject damagePoint = brokenEffects.transform.Find("Damage Point").gameObject;
+            damagePoint.transform.localPosition = Vector3.zero;
+            damagePoint.transform.localRotation = Quaternion.identity;
+            damagePoint.transform.localScale = Vector3.one;
             iSpawnCard = Object.Instantiate(interactableSpawnCardBasis);
             iSpawnCard.name = $"iscBroken{name}";
             iSpawnCard.prefab = brokenObject;
-            iSpawnCard.slightlyRandomizeOrientation = true;
+            iSpawnCard.slightlyRandomizeOrientation = false;
             iSpawnCard.orientToFloor = true;
             DirectorCard directorCard = new DirectorCard
             {
