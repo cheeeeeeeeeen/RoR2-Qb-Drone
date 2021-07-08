@@ -1,4 +1,4 @@
-﻿#define DEBUG
+﻿#undef DEBUG
 
 using Chen.GradiusMod;
 using Chen.GradiusMod.Drones;
