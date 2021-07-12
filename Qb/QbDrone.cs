@@ -77,8 +77,8 @@ namespace Chen.Qb
             body.levelCrit *= 2;
             body.portraitIcon = assetBundle.LoadAsset<Texture>("Assets/Icon/QbIcon.png");
             GameObject customModel = assetBundle.LoadAsset<GameObject>("Assets/DroneBody/MainBody.prefab");
-            droneBody.ReplaceModel(customModel);
-            customModel.InitializeDroneModelComponents(body, 1.4f, DebugCheck());
+            droneBody.ReplaceModel(customModel, DebugCheck());
+            customModel.InitializeDroneModelComponents(body, 1.4f);
             SkillLocator locator = droneBody.GetComponent<SkillLocator>();
             LoadoutAPI.AddSkill(typeof(ScatterGrenades));
             SkillDef grenadeSkillDef = Object.Instantiate(skillBasis);
@@ -109,8 +109,7 @@ namespace Chen.Qb
             GenericDisplayNameProvider nameProvider = brokenObject.GetComponent<GenericDisplayNameProvider>();
             nameProvider.displayToken = "QB_DRONE_NAME";
             GameObject customBrokenModel = assetBundle.LoadAsset<GameObject>("Assets/DroneBroken/MainBroken.prefab");
-            brokenObject.ReplaceModel(customBrokenModel);
-            brokenObject.AddComponent<MaterialController>();
+            brokenObject.ReplaceModel(customBrokenModel, DebugCheck());
             Highlight highlight = brokenObject.GetComponent<Highlight>();
             GameObject customBrokenInnerModel = customBrokenModel.transform.Find("BrokenCube").gameObject;
             highlight.targetRenderer = customBrokenInnerModel.GetComponent<MeshRenderer>();
