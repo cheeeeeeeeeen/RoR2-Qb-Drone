@@ -67,6 +67,7 @@ namespace Chen.Qb
             Log.Debug("Loading asset bundle...");
             BundleInfo bundleInfo = new BundleInfo("Chen.Qb.assetbundle", BundleType.UnityAssetBundle);
             assetBundle = new AssetsManager(bundleInfo).Register();
+            assetBundle.ConvertShaders();
 
             Log.Debug("Registering Qb Drone...");
             dronesList = DroneCatalog.Initialize(ModGuid, cfgFile);
