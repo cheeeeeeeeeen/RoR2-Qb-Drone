@@ -19,6 +19,7 @@ namespace Chen.Qb.Components
         private static List<float> damageCoefficients;
         private static List<float> forces;
         private static float mayhemInterval;
+        private static GameObject fireworksProjectile;
 
         private CharacterBody characterBody;
         private float timer;
@@ -29,8 +30,6 @@ namespace Chen.Qb.Components
         private float mayhemIntervalTimer;
         private Transform modelTransform;
         private Transform root;
-
-        private static GameObject fireworksProjectile { get => Resources.Load<GameObject>("prefabs/projectiles/FireworkProjectile"); }
 
         private static void Initialize()
         {
@@ -48,6 +47,7 @@ namespace Chen.Qb.Components
             damageCoefficients = new List<float> { 3f, 1.5f, 5f };
             forces = new List<float> { 1.5f, 3f, 2.5f };
             mayhemInterval = .05f;
+            fireworksProjectile = Resources.Load<GameObject>("prefabs/projectiles/FireworkProjectile");
         }
 
         private void Awake()

@@ -17,12 +17,11 @@ namespace Chen.Qb.States
         private static string soundString;
         private static float spread;
         private static float damageCoefficient;
+        private static GameObject grenadePrefab;
 
         private Transform aimOrigin;
         private float timer;
         private int soundId;
-
-        private static GameObject grenadePrefab { get => Resources.Load<GameObject>("prefabs/projectiles/CommandoGrenadeProjectile"); }
 
         private static void Initialize()
         {
@@ -35,6 +34,7 @@ namespace Chen.Qb.States
             soundString = ChargeCaptainShotgun.enterSoundString;
             spread = 20f;
             damageCoefficient = 5f;
+            grenadePrefab = Resources.Load<GameObject>("prefabs/projectiles/CommandoGrenadeProjectile");
         }
 
         private void StopSound()
