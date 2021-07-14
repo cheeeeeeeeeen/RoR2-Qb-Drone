@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Chen.Qb.ModPlugin;
 using static R2API.DirectorAPI;
+using UnityObject = UnityEngine.Object;
 
 namespace Chen.Qb
 {
@@ -86,14 +87,14 @@ namespace Chen.Qb
             customModel.InitializeDroneModelComponents(body, 1.4f);
             SkillLocator locator = droneBody.GetComponent<SkillLocator>();
             LoadoutAPI.AddSkill(typeof(ScatterGrenades));
-            SkillDef grenadeSkillDef = Object.Instantiate(skillBasis);
+            SkillDef grenadeSkillDef = UnityObject.Instantiate(skillBasis);
             grenadeSkillDef.activationState = new SerializableEntityStateType(typeof(ScatterGrenades));
             grenadeSkillDef.baseRechargeInterval = 12;
             grenadeSkillDef.beginSkillCooldownOnSkillEnd = true;
             grenadeSkillDef.baseMaxStock = 1;
             grenadeSkillDef.fullRestockOnAssign = false;
             LoadoutAPI.AddSkillDef(grenadeSkillDef);
-            SkillFamily grenadeSkillFamily = Object.Instantiate(locator.primary.skillFamily);
+            SkillFamily grenadeSkillFamily = UnityObject.Instantiate(locator.primary.skillFamily);
             grenadeSkillFamily.variants = new SkillFamily.Variant[1];
             grenadeSkillFamily.variants[0] = new SkillFamily.Variant
             {
@@ -131,7 +132,7 @@ namespace Chen.Qb
             damagePoint.transform.localPosition = Vector3.zero;
             damagePoint.transform.localRotation = Quaternion.identity;
             damagePoint.transform.localScale = Vector3.one;
-            iSpawnCard = Object.Instantiate(interactableSpawnCardBasis);
+            iSpawnCard = UnityObject.Instantiate(interactableSpawnCardBasis);
             iSpawnCard.name = $"iscBroken{name}";
             iSpawnCard.prefab = brokenObject;
             iSpawnCard.slightlyRandomizeOrientation = false;
@@ -157,7 +158,7 @@ namespace Chen.Qb
                 InteractableCategory = InteractableCategory.Drones,
             };
             spiderMine = originalSpiderMine.InstantiateClone("QbSpiderMine", true);
-            Object.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
+            UnityObject.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
             spiderMine.AddComponent<Disappear>();
             ProjectileAPI.Add(spiderMine);
         }

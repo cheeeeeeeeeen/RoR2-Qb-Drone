@@ -46,7 +46,7 @@ namespace Chen.Qb.States
         {
             Initialize();
             base.OnEnter();
-            aimOrigin = transform.Find("ModelBase").Find("MainBody").Find("Node (Front)");
+            aimOrigin = transform.Find("ModelBase").Find("MainBody").Find("Node (Front)").Find("AimOrigin");
             timer = 0f;
             soundId = -1;
         }

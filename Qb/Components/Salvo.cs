@@ -35,6 +35,7 @@ namespace Chen.Qb.Components
         {
             if (initialized) return;
             initialized = true;
+            fireworksProjectile = Resources.Load<GameObject>("prefabs/projectiles/FireworkProjectile");
             effectPrefab = FireTazer.chargeEffectPrefab;
             cooldown = 60f;
             mayhemDuration = 1.5f;
@@ -47,7 +48,6 @@ namespace Chen.Qb.Components
             damageCoefficients = new List<float> { 3f, 1.5f, 5f };
             forces = new List<float> { 1.5f, 3f, 2.5f };
             mayhemInterval = .05f;
-            fireworksProjectile = Resources.Load<GameObject>("prefabs/projectiles/FireworkProjectile");
         }
 
         private void Awake()
@@ -163,6 +163,7 @@ namespace Chen.Qb.Components
                     d = -modelTransform.forward;
                     break;
             }
+            root = root.Find("AimOrigin");
             return new Ray(root.position, d.normalized);
         }
 
