@@ -41,7 +41,7 @@ namespace Chen.Qb.Components
             mayhemDuration = 1.5f;
             projectilePrefabs = new List<GameObject>
             {
-                GlobalEventManager.instance.missilePrefab,
+                GlobalEventManager.CommonAssets.missilePrefab,
                 fireworksProjectile,
                 QbDrone.instance.spiderMine
             };

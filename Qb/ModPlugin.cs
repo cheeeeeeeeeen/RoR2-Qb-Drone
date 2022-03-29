@@ -25,7 +25,6 @@ namespace Chen.Qb
     [BepInDependency(Helpers.HelperPlugin.ModGuid, Helpers.HelperPlugin.ModVer)]
     [BepInDependency(GradiusModPlugin.ModGuid, GradiusModPlugin.ModVer)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
-    [R2APISubmoduleDependency()]
     public class ModPlugin : BaseUnityPlugin
     {
         /// <summary>
