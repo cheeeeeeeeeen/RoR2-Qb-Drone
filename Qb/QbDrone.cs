@@ -86,14 +86,14 @@ namespace Chen.Qb
             droneBody.ReplaceModel(customModel, DebugCheck());
             customModel.InitializeDroneModelComponents(body, 1.4f);
             SkillLocator locator = droneBody.GetComponent<SkillLocator>();
-            LoadoutAPI.AddSkill(typeof(ScatterGrenades));
+            ContentAddition.AddEntityState<ScatterGrenades>(out _);
             SkillDef grenadeSkillDef = UnityObject.Instantiate(skillBasis);
             grenadeSkillDef.activationState = new SerializableEntityStateType(typeof(ScatterGrenades));
             grenadeSkillDef.baseRechargeInterval = 12;
             grenadeSkillDef.beginSkillCooldownOnSkillEnd = true;
             grenadeSkillDef.baseMaxStock = 1;
             grenadeSkillDef.fullRestockOnAssign = false;
-            LoadoutAPI.AddSkillDef(grenadeSkillDef);
+            ContentAddition.AddSkillDef(grenadeSkillDef);
             SkillFamily grenadeSkillFamily = UnityObject.Instantiate(locator.primary.skillFamily);
             grenadeSkillFamily.variants = new SkillFamily.Variant[1];
             grenadeSkillFamily.variants[0] = new SkillFamily.Variant
@@ -102,7 +102,7 @@ namespace Chen.Qb
                 viewableNode = new ViewablesCatalog.Node("", false, null)
             };
             locator.primary.SetFieldValue("_skillFamily", grenadeSkillFamily);
-            LoadoutAPI.AddSkillFamily(grenadeSkillFamily);
+            ContentAddition.AddSkillFamily(grenadeSkillFamily);
             CharacterDeathBehavior death = body.GetOrAddComponent<CharacterDeathBehavior>();
             death.deathState = new SerializableEntityStateType(typeof(DeathState));
             master.bodyPrefab = droneBody;
@@ -148,7 +148,6 @@ namespace Chen.Qb
                 minimumStageCompletions = 4,
 #endif
                 spawnDistance = DirectorCore.MonsterSpawnDistance.Close,
-                allowAmbushSpawn = true,
                 preventOverhead = false
             };
             iDirectorCardHolder = new DirectorCardHolder
@@ -160,7 +159,7 @@ namespace Chen.Qb
             spiderMine = originalSpiderMine.InstantiateClone("QbSpiderMine", true);
             UnityObject.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
             spiderMine.AddComponent<Disappear>();
-            ProjectileAPI.Add(spiderMine);
+            ContentAddition.AddProjectile(spiderMine);
         }
 
         protected override void SetupBehavior()

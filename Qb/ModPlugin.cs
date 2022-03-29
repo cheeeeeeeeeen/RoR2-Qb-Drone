@@ -25,7 +25,6 @@ namespace Chen.Qb
     [BepInDependency(Helpers.HelperPlugin.ModGuid, Helpers.HelperPlugin.ModVer)]
     [BepInDependency(GradiusModPlugin.ModGuid, GradiusModPlugin.ModVer)]
     [NetworkCompatibility(CompatibilityLevel.EveryoneMustHaveMod, VersionStrictness.EveryoneNeedSameModVersion)]
-    [R2APISubmoduleDependency()]
     public class ModPlugin : BaseUnityPlugin
     {
         /// <summary>
@@ -35,7 +34,7 @@ namespace Chen.Qb
 #if DEBUG
             "0." +
 #endif
-            "2.0.11";
+            "2.1.0";
 
         /// <summary>
         /// This mod's name.
