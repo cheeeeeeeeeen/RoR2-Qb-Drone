@@ -3,7 +3,6 @@
 using Chen.GradiusMod;
 using Chen.GradiusMod.Drones;
 using Chen.GradiusMod.Items.GradiusOption;
-using Chen.Helpers.CollectionHelpers;
 using Chen.Helpers.GeneralHelpers;
 using Chen.Helpers.UnityHelpers;
 using Chen.Qb.Components;
@@ -16,10 +15,10 @@ using RoR2.CharacterAI;
 using RoR2.Projectile;
 using RoR2.Skills;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using static Chen.Qb.ModPlugin;
 using static R2API.DirectorAPI;
+using static R2API.DirectorAPI.Helpers;
 using UnityObject = UnityEngine.Object;
 
 namespace Chen.Qb
@@ -166,7 +165,7 @@ namespace Chen.Qb
         {
             base.SetupBehavior();
             GradiusOption.instance.SupportMinionType(name);
-            InteractableActions += DirectorAPI_InteractableActions;
+            AddNewInteractable(iDirectorCardHolder);
             CharacterBody.onBodyStartGlobal += CharacterBody_onBodyStartGlobal;
         }
 
@@ -177,11 +176,6 @@ namespace Chen.Qb
                 obj.gameObject.AddComponent<ShootCloseRangedBullet>();
                 obj.gameObject.AddComponent<Salvo>();
             }
-        }
-
-        private void DirectorAPI_InteractableActions(DccsPool arg0, List<DirectorCardHolder> arg1, StageInfo arg2)
-        {
-            arg1.ConditionalAdd(iDirectorCardHolder, card => iDirectorCardHolder == card);
         }
 
         internal static bool DebugCheck()
