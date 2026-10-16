@@ -3,6 +3,7 @@ using EntityStates.Captain.Weapon;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using RoR2Util = RoR2.Util;
 
 namespace Chen.Qb.States
@@ -34,7 +35,7 @@ namespace Chen.Qb.States
             soundString = ChargeCaptainShotgun.enterSoundString;
             spread = 20f;
             damageCoefficient = 5f;
-            grenadePrefab = Resources.Load<GameObject>("prefabs/projectiles/CommandoGrenadeProjectile");
+            grenadePrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoGrenadeProjectile.prefab").WaitForCompletion();
         }
 
         private void StopSound()
@@ -94,7 +95,7 @@ namespace Chen.Qb.States
                     {
                         return RoR2Util.ApplySpread(optionDirection, 0, spread, 1, 1);
                     });
-                    Util.TriggerArmsRace(characterBody, computedDamage);
+                    //Util.TriggerArmsRace(characterBody, computedDamage);
                 }
             }
             if (isAuthority && fixedAge >= duration) outer.SetNextStateToMain();
