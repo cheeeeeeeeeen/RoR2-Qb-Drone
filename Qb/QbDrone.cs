@@ -45,6 +45,10 @@ namespace Chen.Qb
 
         private static GameObject originalSpiderMine { get => _originalSpiderMine.Value; }
 
+        private static readonly Lazy<GameObject> _equipmentDroneBody = LazyAddressable<GameObject>("RoR2/Base/Drones/EquipmentDroneBody.prefab");
+
+        private static GameObject equipmentDroneBody { get => _equipmentDroneBody.Value; }
+
         protected override GameObject DroneCharacterMasterObject => droneMaster;
 
         protected override void SetupConfig()
@@ -116,6 +120,7 @@ namespace Chen.Qb
             };
             locator.primary.SetFieldValue("_skillFamily", grenadeSkillFamily);
             ContentAddition.AddSkillFamily(grenadeSkillFamily);
+            UseEquipmentDroneCommand(droneBody, locator);
             CharacterDeathBehavior death = body.GetOrAddComponent<CharacterDeathBehavior>();
             death.deathState = new SerializableEntityStateType(typeof(DeathState));
             master.bodyPrefab = droneBody;
@@ -167,7 +172,27 @@ namespace Chen.Qb
             spiderMine.AddComponent<Disappear>();
             ContentAddition.AddProjectile(spiderMine);
             droneDef = CreateDroneDef(LoadVanillaDroneDef("RoR2/Base/Drones/MegaDrone.asset"), droneBody, brokenObject, iSpawnCard, "QB_DRONE",
-                                      body.portraitIcon, pickupDisplay, LoadVanillaDroneDef("RoR2/Base/Drones/Drone1.asset"));
+                                      body.portraitIcon, pickupDisplay, LoadVanillaDroneDef("RoR2/Base/Drones/EquipmentDrone.asset"));
+        }
+
+        // Swaps the Gunner Drone command inherited from the cloned body for the Ram command of the Equipment Drone.
+        private void UseEquipmentDroneCommand(GameObject bodyObject, SkillLocator locator)
+        {
+            DroneCommandReceiver receiver = bodyObject.GetComponent<DroneCommandReceiver>();
+            DroneCommandReceiver equipmentDroneReceiver = equipmentDroneBody ? equipmentDroneBody.GetComponent<DroneCommandReceiver>() : null;
+            if (!receiver || !receiver.commandSkill || !equipmentDroneReceiver || !equipmentDroneReceiver.commandSkill)
+            {
+                Log.Warning($"{name}: The drone command components were not found. Qb keeps the Gunner Drone command.");
+                return;
+            }
+            if (receiver.commandSkill == locator.primary)
+            {
+                Log.Warning($"{name}: The drone command shares the primary skill slot. Qb keeps its grenades as the command.");
+                return;
+            }
+            receiver.commandSkill.SetFieldValue("_skillFamily", equipmentDroneReceiver.commandSkill.skillFamily);
+            receiver.targetType = equipmentDroneReceiver.targetType;
+            receiver.targetDistance = equipmentDroneReceiver.targetDistance;
         }
 
         protected override void SetupBehavior()

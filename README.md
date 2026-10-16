@@ -52,7 +52,8 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 
 **2.2.0**
 - Update to the latest game version and to Chen's Gradius Mod without TILER2.
-- The Qb Drone is now registered as a drone like the vanilla ones, so it can be picked up, scrapped, combined and upgraded.
+- The Qb Drone is now registered as a red tier drone like the vanilla ones, so it can be picked up, scrapped, combined and upgraded.
+- The Qb Drone uses the Ram command of the Equipment Drone when commanded by the Operator.
 - Fix the grenades and fireworks not firing, and the broken Qb Drone failing to load, due to assets that moved to Addressables.
 - Remove Arms Race support as Chen's Classic Items is no longer supported by Chen's Gradius Mod.
 
