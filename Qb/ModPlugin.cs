@@ -34,7 +34,7 @@ namespace Chen.Qb
 #if DEBUG
             "0." +
 #endif
-            "2.1.2";
+            "2.2.0";
 
         /// <summary>
         /// This mod's name.
@@ -48,14 +48,12 @@ namespace Chen.Qb
 
         internal static ConfigFile cfgFile;
         internal static Log Log;
-        internal static List<DroneInfo> dronesList = new List<DroneInfo>();
+        internal static List<GradiusMod.Drones.DroneInfo> dronesList = new List<GradiusMod.Drones.DroneInfo>();
         internal static AssetBundle assetBundle;
-        internal static ContentProvider contentProvider;
 
         private void Awake()
         {
             Log = new Log(Logger);
-            contentProvider = new ContentProvider();
 
 #if DEBUG
             Chen.Helpers.GeneralHelpers.MultiplayerTest.Enable(Log);
@@ -71,8 +69,6 @@ namespace Chen.Qb
             Log.Debug("Registering Qb Drone...");
             dronesList = DroneCatalog.Initialize(ModGuid, cfgFile);
             DroneCatalog.ScopedSetupAll(dronesList);
-
-            contentProvider.Initialize();
         }
 
         internal static bool DebugCheck()

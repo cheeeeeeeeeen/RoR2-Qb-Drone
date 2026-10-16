@@ -2,7 +2,6 @@
 
 using Chen.GradiusMod;
 using Chen.GradiusMod.Drones;
-using Chen.GradiusMod.Items.GradiusOption;
 using Chen.Helpers.GeneralHelpers;
 using Chen.Helpers.UnityHelpers;
 using Chen.Qb.Components;
@@ -16,6 +15,7 @@ using RoR2.Projectile;
 using RoR2.Skills;
 using System;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using static Chen.Qb.ModPlugin;
 using static R2API.DirectorAPI;
 using static R2API.DirectorAPI.Helpers;
@@ -35,9 +35,9 @@ namespace Chen.Qb
         private GameObject droneBody { get; set; }
         private GameObject droneMaster { get; set; }
 
-        private static readonly Lazy<SkillDef> _skillBasis = new Lazy<SkillDef>(() => Resources.Load<SkillDef>("skilldefs/drone1body/Drone1BodyGun"));
-        private static readonly Lazy<InteractableSpawnCard> _iscBasis = new Lazy<InteractableSpawnCard>(() => Resources.Load<InteractableSpawnCard>("spawncards/interactablespawncard/iscBrokenDrone1"));
-        private static readonly Lazy<GameObject> _originalSpiderMine = new Lazy<GameObject>(() => Resources.Load<GameObject>("prefabs/projectiles/SpiderMine"));
+        private static readonly Lazy<SkillDef> _skillBasis = LazyAddressable<SkillDef>("RoR2/Base/Drones/Drone1BodyGun.asset");
+        private static readonly Lazy<InteractableSpawnCard> _iscBasis = LazyAddressable<InteractableSpawnCard>("RoR2/Base/Drones/iscBrokenDrone1.asset");
+        private static readonly Lazy<GameObject> _originalSpiderMine = LazyAddressable<GameObject>("RoR2/Base/Engi/SpiderMine.prefab");
 
         private static InteractableSpawnCard interactableSpawnCardBasis { get => _iscBasis.Value; }
 
@@ -59,17 +59,30 @@ namespace Chen.Qb
             LanguageAPI.Add("QB_DRONE_NAME", "Qb Drone");
             LanguageAPI.Add("QB_DRONE_CONTEXT", "Repair Qb Drone");
             LanguageAPI.Add("QB_DRONE_INTERACTABLE_NAME", "Broken Qb Drone");
+            LanguageAPI.Add("QB_DRONE_PICKUP", "A mysterious floating cube that lobs grenades, rockets nearby enemies and periodically unleashes a salvo.");
+            LanguageAPI.Add("QB_DRONE_DESCRIPTION",
+                "Lobs a volley of <style=cIsDamage>15 grenades</style> for <style=cIsDamage>500% damage</style> each. " +
+                "Fires rockets at enemies within <style=cIsUtility>10m</style> for <style=cIsDamage>100% damage</style>. " +
+                "Every <style=cIsUtility>60 seconds</style>, unleashes a salvo of <style=cIsDamage>missiles, fireworks and mines</style> from all of its sides.");
+            LanguageAPI.Add("QB_DRONE_SKILL_DESCRIPTION",
+                "Lob Grenades: Lob 15 grenades for <style=cIsDamage>500% damage</style> each. " +
+                "Also fires at nearby enemies and periodically unleashes a <style=cIsDamage>Mayhem Salvo</style>.");
+            GameObject pickupDisplay = CreatePickupDisplay(assetBundle.LoadAsset<GameObject>("Assets/DroneBody/MainBody.prefab"));
             brokenObject = interactableSpawnCardBasis.prefab.InstantiateClone($"{name}Broken", true);
             SummonMasterBehavior summonMasterBehavior = brokenObject.GetComponent<SummonMasterBehavior>();
             droneMaster = summonMasterBehavior.masterPrefab.InstantiateClone($"{name}Master", true);
-            contentProvider.masterObjects.Add(droneMaster);
+            ContentAddition.AddMaster(droneMaster);
             AISkillDriver[] skillDrivers = droneMaster.GetComponents<AISkillDriver>();
-            skillDrivers[3].maxDistance = 25f;
-            skillDrivers[4].maxDistance = 50f;
+            if (skillDrivers.Length > 4)
+            {
+                skillDrivers[3].maxDistance = 25f;
+                skillDrivers[4].maxDistance = 50f;
+            }
+            else Log.Warning($"{name}: The Gunner Drone skill drivers changed. Attack ranges are left at their default values.");
             skillDrivers.SetAllDriversToAimTowardsEnemies();
             CharacterMaster master = droneMaster.GetComponent<CharacterMaster>();
             droneBody = master.bodyPrefab.InstantiateClone($"{name}Body", true);
-            contentProvider.bodyObjects.Add(droneBody);
+            ContentAddition.AddBody(droneBody);
             CharacterBody body = droneBody.GetComponent<CharacterBody>();
             body.baseNameToken = "QB_DRONE_NAME";
             body.baseMaxHealth *= 2;
@@ -98,6 +111,7 @@ namespace Chen.Qb
             grenadeSkillFamily.variants[0] = new SkillFamily.Variant
             {
                 skillDef = grenadeSkillDef,
+                unlockableDef = null,
                 viewableNode = new ViewablesCatalog.Node("", false, null)
             };
             locator.primary.SetFieldValue("_skillFamily", grenadeSkillFamily);
@@ -114,23 +128,15 @@ namespace Chen.Qb
             GenericDisplayNameProvider nameProvider = brokenObject.GetComponent<GenericDisplayNameProvider>();
             nameProvider.displayToken = "QB_DRONE_NAME";
             GameObject customBrokenModel = assetBundle.LoadAsset<GameObject>("Assets/DroneBroken/MainBroken.prefab");
-            brokenObject.ReplaceModel(customBrokenModel, DebugCheck());
-            Highlight highlight = brokenObject.GetComponent<Highlight>();
             GameObject customBrokenInnerModel = customBrokenModel.transform.Find("BrokenCube").gameObject;
-            highlight.targetRenderer = customBrokenInnerModel.GetComponent<MeshRenderer>();
-            customBrokenModel.AddComponent<EntityLocator>().entity = brokenObject;
-            customBrokenInnerModel.AddComponent<EntityLocator>().entity = brokenObject;
-            GameObject brokenEffects = brokenObject.transform.Find("ModelBase").Find("BrokenDroneVFX").gameObject;
-            brokenEffects.transform.parent = customBrokenModel.transform;
-            GameObject sparks = brokenEffects.transform.Find("Small Sparks, Mesh").gameObject;
-            ParticleSystem.ShapeModule sparksShape = sparks.GetComponent<ParticleSystem>().shape;
-            sparksShape.shapeType = ParticleSystemShapeType.MeshRenderer;
-            sparksShape.meshShapeType = ParticleSystemMeshShapeType.Edge;
-            sparksShape.meshRenderer = (MeshRenderer)highlight.targetRenderer;
-            GameObject damagePoint = brokenEffects.transform.Find("Damage Point").gameObject;
-            damagePoint.transform.localPosition = Vector3.zero;
-            damagePoint.transform.localRotation = Quaternion.identity;
-            damagePoint.transform.localScale = Vector3.one;
+            ReplaceBrokenModel(brokenObject, customBrokenModel, customBrokenInnerModel.GetComponent<MeshRenderer>(), customBrokenInnerModel);
+            Transform damagePoint = FindBrokenDamagePoint(customBrokenModel);
+            if (damagePoint)
+            {
+                damagePoint.localPosition = Vector3.zero;
+                damagePoint.localRotation = Quaternion.identity;
+                damagePoint.localScale = Vector3.one;
+            }
             iSpawnCard = UnityObject.Instantiate(interactableSpawnCardBasis);
             iSpawnCard.name = $"iscBroken{name}";
             iSpawnCard.prefab = brokenObject;
@@ -156,15 +162,17 @@ namespace Chen.Qb
                 InteractableCategory = InteractableCategory.Drones,
             };
             spiderMine = originalSpiderMine.InstantiateClone("QbSpiderMine", true);
-            UnityObject.Destroy(spiderMine.GetComponent<ProjectileDeployToOwner>());
+            ProjectileDeployToOwner deployToOwner = spiderMine.GetComponent<ProjectileDeployToOwner>();
+            if (deployToOwner) UnityObject.DestroyImmediate(deployToOwner);
             spiderMine.AddComponent<Disappear>();
             ContentAddition.AddProjectile(spiderMine);
+            droneDef = CreateDroneDef(LoadVanillaDroneDef("RoR2/Base/Drones/MegaDrone.asset"), droneBody, brokenObject, iSpawnCard, "QB_DRONE",
+                                      body.portraitIcon, pickupDisplay, LoadVanillaDroneDef("RoR2/Base/Drones/Drone1.asset"));
         }
 
         protected override void SetupBehavior()
         {
             base.SetupBehavior();
-            GradiusOption.instance.SupportMinionType(name);
             AddNewInteractable(iDirectorCardHolder);
             CharacterBody.onBodyStartGlobal += CharacterBody_onBodyStartGlobal;
         }
@@ -176,6 +184,16 @@ namespace Chen.Qb
                 obj.gameObject.AddComponent<ShootCloseRangedBullet>();
                 obj.gameObject.AddComponent<Salvo>();
             }
+        }
+
+        internal static Lazy<T> LazyAddressable<T>(string key)
+        {
+            return new Lazy<T>(() =>
+            {
+                T asset = Addressables.LoadAssetAsync<T>(key).WaitForCompletion();
+                if (asset == null) Log.Error($"Failed to load the addressable asset {key}.");
+                return asset;
+            });
         }
 
         internal static bool DebugCheck()

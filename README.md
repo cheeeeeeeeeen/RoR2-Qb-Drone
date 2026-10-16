@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/Version-2.1.2-orange)
+![Version](https://img.shields.io/badge/Version-2.2.0-orange)
 [![GitHub issues](https://img.shields.io/github/issues/cheeeeeeeeeen/RoR2-Qb-Drone)](https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/cheeeeeeeeeen/RoR2-Qb-Drone)](https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone/pulls)
 [![Support Chen](https://img.shields.io/badge/Support-Chen-ff69b4)](https://ko-fi.com/cheeeeeeeeeen)
@@ -36,6 +36,11 @@ Use **[Thunderstore Mod Manager](https://www.overwolf.com/app/Thunderstore-Thund
 
 If one does not want to use a mod manager, then get the DLL from **[Thunderstore](https://thunderstore.io/package/Chen/Qb/)**.
 
+## More Information
+
+**Phreelosu** continued to maintain the mod in working order for the latest updates (as of September 1, 2024).
+- Contact: [GitHub Account](https://github.com/Phreelosu)
+
 ## Contact
 - Issue Page: https://github.com/cheeeeeeeeeen/RoR2-Qb-Drone/issues
 - Email: `blancfaye7@gmail.com`
@@ -44,6 +49,12 @@ If one does not want to use a mod manager, then get the DLL from **[Thunderstore
 - Give a tip through Ko-fi: https://ko-fi.com/cheeeeeeeeeen
 
 ## Changelog
+
+**2.2.0**
+- Update to the latest game version and to Chen's Gradius Mod without TILER2.
+- The Qb Drone is now registered as a drone like the vanilla ones, so it can be picked up, scrapped, combined and upgraded.
+- Fix the grenades and fireworks not firing, and the broken Qb Drone failing to load, due to assets that moved to Addressables.
+- Remove Arms Race support as Chen's Classic Items is no longer supported by Chen's Gradius Mod.
 
 **2.1.2**
 - Recompile to update libraries.

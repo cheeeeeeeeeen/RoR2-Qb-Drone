@@ -120,7 +120,7 @@ namespace Chen.Qb.Components
                         {
                             return (targetPosition - option.transform.position).normalized;
                         });
-                        Util.TriggerArmsRace(characterBody, computedDamage);
+                        //Util.TriggerArmsRace(characterBody, computedDamage);
                     }
                     timer -= cooldown;
                 }

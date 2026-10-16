@@ -4,6 +4,7 @@ using RoR2.Projectile;
 using RoR2.UI;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using RoR2Util = RoR2.Util;
 
@@ -35,7 +36,7 @@ namespace Chen.Qb.Components
         {
             if (initialized) return;
             initialized = true;
-            fireworksProjectile = Resources.Load<GameObject>("prefabs/projectiles/FireworkProjectile");
+            fireworksProjectile = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Firework/FireworkProjectile.prefab").WaitForCompletion();
             effectPrefab = FireTazer.chargeEffectPrefab;
             cooldown = 60f;
             mayhemDuration = 1.5f;
@@ -121,7 +122,7 @@ namespace Chen.Qb.Components
                     };
                     ProjectileManager.instance.FireProjectile(info);
                     Util.FireOptions(characterBody, info, (_o, _d) => aimRay.direction);
-                    Util.TriggerArmsRace(characterBody, computedDamage);
+                    //Util.TriggerArmsRace(characterBody, computedDamage);
                 }
                 mayhemIntervalTimer -= mayhemInterval;
             }
